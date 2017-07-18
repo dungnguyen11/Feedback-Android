@@ -38,14 +38,16 @@ public class HttpHandler {
         return "";
     }
 
-    public static String doPost(String urlStr, User user) {
+    public static String doPost(String urlStr, Feedback feedback) {
 
         try {
             URL url = new URL(urlStr);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", user.id);
+            jsonObject.put("user", feedback.user);
+            jsonObject.put("content", feedback.content);
+            jsonObject.put("agency", feedback.agency);
 
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/json");
