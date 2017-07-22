@@ -17,39 +17,44 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import static com.example.android.feedback.R.id.btnSend;
+import static com.example.android.feedback.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity {
 
     String agenciesRes = "";
     String feedbackRes = "";
-    Spinner spinner;
+    Spinner spinner1;
     EditText txtFeedback;
-    Agency selectedAgency;
+    //TODO: test agency
+    Agency selectedAgency = new Agency("fake agency");
+    Button btnSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        spinner = (Spinner) findViewById(R.id.spinner1);
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
 
         new LoadAgencies().execute();
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String seleted = (String) adapterView.getSelectedItem();
-                selectedAgency.name = seleted;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        //TODO: 1st bug: cannot find spinner1??
+//        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                String selected = (String) adapterView.getSelectedItem();
+//                selectedAgency.name = selected;
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         txtFeedback = (EditText) findViewById(R.id.txtFeedback);
 
-        Button btnSend = (Button) findViewById(R.id.btnSend);
+        btnSend = (Button) findViewById(R.id.btnSend);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 new SendFeedback().execute(new Feedback(selectedAgency, txtFeedback.getText()+""));
             }
         });
+
+//        new LoadAgencies().execute();
     }
 
     private class LoadAgencies extends AsyncTask<Void, Void, Void> {
@@ -73,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             Agency[] agencies = (Agency[]) gson.fromJson(agenciesRes, Agency[].class);
 
             ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_dropdown_item_1line, agencies);
-            spinner.setAdapter(adapter);
+            spinner1.setAdapter(adapter);
         }
     }
 
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (!feedbackRes.equals("")) {
-                Toast.makeText(MainActivity.this, "Feedback is sent", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Feedback is sent!", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -44,8 +44,9 @@ public class HttpHandler {
             URL url = new URL(urlStr);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
+            //TODO: Even though I put the user, content, and agency into jsonObject, it only shows the content on the server
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("user", feedback.user);
+//            jsonObject.put("user", feedback.user);
             jsonObject.put("content", feedback.content);
             jsonObject.put("agency", feedback.agency);
 
