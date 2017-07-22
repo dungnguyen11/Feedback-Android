@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
     String feedbackRes = "";
     Spinner spinner1;
     EditText txtFeedback;
-    //TODO: test agency
-    Agency selectedAgency = new Agency("fake agency");
+    String selectedAgency = "";
     Button btnSend;
 
     @Override
@@ -38,20 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         new LoadAgencies().execute();
 
-        //TODO: 1st bug: cannot find spinner1??
-//        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String selected = (String) adapterView.getSelectedItem();
-//                selectedAgency.name = selected;
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-
         txtFeedback = (EditText) findViewById(R.id.txtFeedback);
 
         btnSend = (Button) findViewById(R.id.btnSend);
@@ -59,12 +44,13 @@ public class MainActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                selectedAgency = spinner1.getSelectedItem().toString();
                 new SendFeedback().execute(new Feedback(selectedAgency, txtFeedback.getText()+""));
             }
         });
 
-//        new LoadAgencies().execute();
     }
+
 
     private class LoadAgencies extends AsyncTask<Void, Void, Void> {
         @Override
@@ -99,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
 }

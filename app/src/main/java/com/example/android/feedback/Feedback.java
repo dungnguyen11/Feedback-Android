@@ -8,14 +8,12 @@ public class Feedback {
     String id;
     User user;
     String content;
-    Agency agency;
+    String agencyId;
+    String agencyName;
 
-    public Feedback(Agency seletedAgency, String content) {
+    public Feedback(String agencyName, String content) {
         this.content = content;
+        this.agencyName = agencyName;
     }
 
-    @Override
-    public String toString() {
-        return content;
-    }
 }
